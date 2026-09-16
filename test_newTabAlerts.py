@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 
 def test_handle_popup(page: Page):
@@ -40,3 +40,16 @@ def test_new_tab(page: Page):
 
     # Verify the extracted email matches the expected value
     assert email == "mentor@rahulshettyacademy.com"
+
+
+def test_verify_assertions(page: Page):
+    """
+    Test case to demonstrate the use of assertions in Playwright.
+    """
+    # Navigate to the login practice page
+    page.goto("https://rahulshettyacademy.com/AutomationPractice/")
+
+    expect(page.get_by_placeholder("Hide/Show Example")).to_be_visible()
+    page.get_by_role("button", name="Hide").click()
+    expect(page.get_by_placeholder("Hide/Show Example")).not_to_be_visible()
+
